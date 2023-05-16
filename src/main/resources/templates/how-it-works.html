@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Budget Tracker</title>
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Set background color -->
+  <style>
+		body {
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: cursive;
+		}
+	</style>
+</head>
+<body>
+<!-- Add navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Budget Tracker</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/view/home}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/view/about}">About Us</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/view/how-it-works}">How it works</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/view/signup}">Signup</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/view/login}">Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <!-- Add title and paragraphs -->
+  <h1>How It Works:</h1>
+  <h2>
+
+
+    Add Expenses: Track your expenses by easily entering the details of each transaction, including the date, category, amount, and any additional notes. Our intuitive interface makes it quick and convenient to log your expenses on the go.
+    <br><br>
+    Add Income: Keep track of your income sources by adding details such as the source name, amount, and frequency. This feature allows you to have a complete picture of your financial inflows and better understand your cash flow.
+    <br><br>
+    Create Budget: Set up personalized budgets for different categories, such as groceries, transportation, entertainment, and more. Define spending limits for each category to ensure you stay on track and avoid overspending.
+    <br><br>
+    View Money Spent: Get a clear overview of how much money you have spent over a specific period. Our application calculates and presents your expenses in an easy-to-understand format, enabling you to identify spending patterns and areas where you can make adjustments.
+    <br><br>
+    Total Number of Expenses and Income: Monitor the total number of expenses and income transactions you have made within a given timeframe. This information gives you insights into your spending habits and helps you evaluate your financial progress.
+    <br><br>
+    Visualize Data: Utilize visual charts and graphs to analyze your financial data comprehensively. Our application generates visual representations of your income, expenses, and budgets, making it easier to identify trends, patterns, and areas for improvement.
+    <br><br>
+    Financial Insights: Gain valuable insights into your financial habits and patterns through our comprehensive reporting feature.
+    <br><br>
+    Our application provides detailed reports that summarize your spending, savings, and income, helping you make informed financial decisions and achieve your goals.
+    Our Budget Tracker Application is your reliable partner in financial management, empowering you to take control of your money and achieve financial peace of mind. Start using it today and experience the benefits of effective budgeting and expense tracking.
+
+
+
+
+  </h2>
+</div>
+
+<!-- Add footer -->
+<footer class="mt-4 bg-light p-3 text-center">
+  <p style="color: black">&copy; 2023 Budget Tracker. All rights reserved.</p>
+</footer>
+
+<!-- Add Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

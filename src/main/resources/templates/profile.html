@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Income Records</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+          * {
+          box-sizing: border-box;
+      }
+
+      /* Sidebar */
+
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            height: 100%;
+            width: 250px;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        #sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+        }
+
+        .btn-dark {
+            background-color: #333;
+            border-color: #333;
+        }
+
+        .btn-dark:hover {
+            background-color: #666;
+            border-color: #666;
+        }
+
+        .list-unstyled {
+            padding: 20px;
+        }
+
+        .list-unstyled li a {
+            display: block;
+            padding: 10px;
+            color: #333;
+        }
+
+        .list-unstyled li.active a {
+            background-color: #666;
+            color: #fff;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: #666;
+            border-color: #666;
+        }
+
+        .btn-secondary:hover {
+            background-color: #333;
+            border-color: #333;
+        }
+
+
+      body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      label {
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      input {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      button:hover {
+        background-color: #3e8e41;
+      }
+
+  </style>
+</head>
+<body>
+<div class="container">
+
+
+
+  <nav id="sidebar" class="bg-opaque">
+    <div class="sidebar-header">
+      <h3>Budget Dashboard</h3>
+      <button type="button" id="sidebarCollapse" class="btn btn-dark">
+        <i class="fa fa-bars"></i>
+        <span>Show/Hide</span>
+      </button>
+    </div>
+    <ul class="list-unstyled components">
+      <li>
+        <a th:href="@{/view/dashboard}">Home</a>
+      </li>
+      <li>
+        <a th:href="@{/view/income}">Income</a>
+      </li>
+      <li>
+        <a th:href="@{/view/expenses}">Expenses</a>
+      </li>
+      <li>
+        <a th:href="@{/view/budget}">Budget</a>
+      </li>
+      <li>
+        <a th:href="@{/view/profile}">Profile</a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <button type="button" class="btn btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+
+  <h1>User Profile</h1>
+  <form action="" th:action="@{/user/update}" th:object="${user}" method="post">
+    <label for="first-name">First Name:</label>
+    <input type="text" th:field="*{firstName}" id="first-name" name="first-name" >
+
+    <label for="last-name">Last Name:</label>
+    <input type="text" th:field="*{lastName}" id="last-name" name="last-name" >
+
+    <label for="address">Address:</label>
+    <input type="text" th:field="*{address}" id="address" name="address" >
+
+    <label for="phone-number">Phone Number:</label>
+    <input type="text" th:field="*{phoneNumber}" id="phone-number" name="phone-number" >
+
+    <label for="email">Email:</label>
+    <input type="text" th:field="*{username}" id="email" name="email" >
+
+    <label for="country">Country:</label>
+    <input type="text" th:field="*{country}" id="country" name="country" >
+
+    <label for="password">Password:</label>
+    <input type="password" th:field="*{password}" id="password" name="password" >
+
+    <button type="submit">Update</button>
+  </form>
+
+
+
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"
+        integrity="sha384-6vzVjYt9Ijq1pbVnHyyYrt0bAfLyH89z+eEMwBHzDXRZAK06wytt1wZ7voaKJ+va"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#sidebarCollapse").on("click", function () {
+            $("#sidebar").toggleClass("active");
+        });
+
+        // Add event listener to the "Add" button
+        document.querySelector(".add-btn").addEventListener("click", function() {
+            openForm();
+        });
+    });
+</script>
+
+</body>
+</html>
+

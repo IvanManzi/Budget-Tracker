@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Welcome Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Sidebar */
+
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #111;
+            height: 100%;
+            width: 250px;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        #sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+        }
+
+        .btn-dark {
+            background-color: #333;
+            border-color: #333;
+        }
+
+        .btn-dark:hover {
+            background-color: #666;
+            border-color: #666;
+        }
+
+        .list-unstyled {
+            padding: 20px;
+        }
+
+        .list-unstyled li a {
+            display: block;
+            padding: 10px;
+            color: #333;
+        }
+
+        .list-unstyled li.active a {
+            background-color: #666;
+            color: #fff;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: #666;
+            border-color: #666;
+        }
+
+        .btn-secondary:hover {
+            background-color: #333;
+            border-color: #333;
+        }
+
+        /* Main Content */
+
+        .wrapper {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .page-header h2 {
+            margin: 0;
+        }
+
+        .page-header h4 {
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .card-header {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .card-body h4 {
+            margin: 0;
+            font-size: 40px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card-body p {
+            margin: 0;
+            font-size: 20px;
+            color: #666;
+        }
+
+    </style>
+
+</head>
+<body class="bg-cream">
+
+<!-- Sidebar -->
+<nav id="sidebar" class="bg-opaque">
+    <div class="sidebar-header">
+        <h3>Budget Dashboard</h3>
+        <button type="button" id="sidebarCollapse" class="btn btn-dark">
+            <i class="fa fa-bars"></i>
+            <span>Show/Hide</span>
+        </button>
+    </div>
+    <ul class="list-unstyled components">
+        <li>
+            <a th:href="@{/view/dashboard}">Home</a>
+        </li>
+        <li>
+            <a th:href="@{/view/income}">Income</a>
+        </li>
+        <li>
+            <a th:href="@{/view/expenses}">Expenses</a>
+        </li>
+        <li>
+            <a th:href="@{/view/budget}">Budget</a>
+        </li>
+        <li>
+            <a th:href="@{/view/profile}">Profile</a>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <button type="button" class="btn btn-secondary">Logout</button>
+    </div>
+</nav>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h2>Budget Tracker Dashboard</h2>
+                    <h4>Welcome First Name Last Name</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Expenses Total Amount</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>$1000</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Income Total Amount</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>$5000</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Expenses Total Amount</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>$1000</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Graphs -->
+    <div class="graph-container">
+        <h2>Expenses Over Time</h2>
+        <canvas id="expensesChart"></canvas>
+    </div>
+
+    <div class="graph-container">
+        <h2>Revenue Over Time</h2>
+        <canvas id="revenueChart"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"
+        integrity="sha384-6vzVjYt9Ijq1pbVnHyyYrt0bAfLyH89z+eEMwBHzDXRZAK06wytt1wZ7voaKJ+va"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+        $(document).ready(function () {
+            $("#sidebarCollapse").on("click", function () {
+                $("#sidebar").toggleClass("active");
+            });
+        });
+
+        // Sample data for the graphs
+    const expenseData = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [{
+            label: "Expenses",
+            data: [500, 800, 600, 900, 700, 1000],
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
+        }]
+    };
+
+    const revenueData = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [{
+            label: "Revenue",
+            data: [1200, 1500, 1400, 1600, 1800, 2000],
+            backgroundColor: "rgba(54, 162, 235, 0.5)"
+        }]
+    };
+
+    // Create and update the expenses chart
+    const expensesChartCtx = document.getElementById("expensesChart").getContext("2d");
+    const expensesChart = new Chart(expensesChartCtx, {
+        type: "bar",
+        data: expenseData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Create and update the revenue chart
+    const revenueChartCtx = document.getElementById("revenueChart").getContext("2d");
+    const revenueChart = new Chart(revenueChartCtx, {
+        type: "bar",
+        data: revenueData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Expense Records</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+          * {
+          box-sizing: border-box;
+      }
+
+      /* Sidebar */
+
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #111;
+            height: 100%;
+            width: 250px;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        #sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+        }
+
+        .btn-dark {
+            background-color: #333;
+            border-color: #333;
+        }
+
+        .btn-dark:hover {
+            background-color: #666;
+            border-color: #666;
+        }
+
+        .list-unstyled {
+            padding: 20px;
+        }
+
+        .list-unstyled li a {
+            display: block;
+            padding: 10px;
+            color: #333;
+        }
+
+        .list-unstyled li.active a {
+            background-color: #666;
+            color: #fff;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: #666;
+            border-color: #666;
+        }
+
+        .btn-secondary:hover {
+            background-color: #333;
+            border-color: #333;
+        }
+
+
+      body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+      }
+
+      .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+      }
+
+      h1 {
+          text-align: center;
+      }
+
+      .add-btn {
+          background-color: #4CAF50;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          float: right;
+      }
+
+      .records {
+          margin-top: 20px;
+      }
+
+      table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+
+      table th, table td {
+          padding: 12px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+      }
+
+      table th {
+          background-color: #f2f2f2;
+      }
+
+      .pagination {
+          margin-top: 20px;
+          text-align: center;
+      }
+
+      .pagination a {
+          color: black;
+          float: left;
+          padding: 8px 16px;
+          text-decoration: none;
+      }
+
+      .pagination a.active {
+          background-color: #4CAF50;
+          color: white;
+      }
+
+      .pagination a:hover:not(.active) {
+          background-color: #ddd;
+      }
+
+      .form-popup {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+          padding-top: 50px;
+      }
+
+      .form-popup form {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 500px;
+      }
+
+      .form-popup h2 {
+          margin-top: 0;
+      }
+
+      .form-popup label {
+          display: block;
+          margin-bottom: 10px;
+      }
+
+      .form-popup input[type=text] {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          margin-bottom: 20px;
+      }
+
+      .form-popup button[type=submit],
+      .form-popup button[type=button] {
+          background-color: #4CAF50;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          float: right;
+      }
+
+      .form-popup button[type=submit]:hover,
+      .form-popup button[type=button]:hover {
+          background-color: #3e8e41;
+      }
+
+      .cancel-btn {
+          background-color: #f44336;
+      }
+
+      .cancel-btn:hover {
+          background-color: #da190b;
+      }
+
+  </style>
+</head>
+<body>
+<div class="container">
+
+
+
+  <nav id="sidebar" class="bg-opaque">
+    <div class="sidebar-header">
+      <h3>Budget Dashboard</h3>
+      <button type="button" id="sidebarCollapse" class="btn btn-dark">
+        <i class="fa fa-bars"></i>
+        <span>Show/Hide</span>
+      </button>
+    </div>
+    <ul class="list-unstyled components">
+      <li>
+        <a th:href="@{/view/dashboard}">Home</a>
+      </li>
+      <li>
+        <a th:href="@{/view/income}">Income</a>
+      </li>
+      <li>
+        <a th:href="@{/view/expenses}">Expenses</a>
+      </li>
+      <li>
+        <a th:href="@{/view/budget}">Budget</a>
+      </li>
+      <li>
+        <a th:href="@{/view/profile}">Profile</a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <button type="button" class="btn btn-secondary">Logout</button>
+    </div>
+  </nav>
+
+
+  <h1>Expense Records</h1>
+  <button id="add-btn" class="add-btn" onclick="openForm()">Add Record</button>
+  <div class="records">
+    <table>
+      <thead>
+      <tr>
+        <th>Expense ID</th>
+        <th>Expense Category</th>
+        <th>Notes</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="expense, row : ${expense}" th:class="${row.odd}? 'odd' : 'even'">
+        <td th:text="${expense.expenseId}"></td>
+        <td th:text="${expense.expenseCategory}"></td>
+        <td th:text="${expense.notes}"></td>
+        <td th:text="${expense.date}"></td>
+        <td>
+          <form action="" th:action="@{/budget/expense/delete/}" method="post">
+            <input type="hidden" name="expenseId" th:value="${expense.expenseId}">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <!-- add more records here -->
+      </tbody>
+    </table>
+    <div class="pagination">
+      <a href="#">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <!-- add more pages here -->
+    </div>
+  </div>
+</div>
+<div class="form-popup" id="add-form">
+  <form action="" th:action="@{/budget/expense/create}" th:object="${expenseObj}" method="post">
+    <label for="expenseCategory">Expense category:</label>
+    <input type="text" th:field="*{expenseCategory}" id="expenseCategory" name="expenseCategory" required>
+    <label for="notes">Notes:</label>
+    <input type="text" th:field="*{notes}" id="notes" name="notes" required>
+    <label for="date">Date:</label>
+    <input type="date" th:field="*{date}" id="date" name="date" required>
+    <button type="submit" class="submit-btn">Add</button>
+    <button type="button" class="cancel-btn" onclick="closeForm()">Cancel</button>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"
+        integrity="sha384-6vzVjYt9Ijq1pbVnHyyYrt0bAfLyH89z+eEMwBHzDXRZAK06wytt1wZ7voaKJ+va"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#sidebarCollapse").on("click", function () {
+            $("#sidebar").toggleClass("active");
+        });
+
+        // Add event listener to the "Add" button
+        document.querySelector(".add-btn").addEventListener("click", function() {
+            openForm();
+        });
+    });
+
+    function openForm() {
+        document.getElementById("add-form").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("add-form").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
